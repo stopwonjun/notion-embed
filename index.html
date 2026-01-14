@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>올해의 드라이브</title>
+    <style>
+        
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: transparent;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        
+        .widget-container {
+            width: 300px; 
+            position: relative;
+            padding-top: 30px; 
+        }
+
+        
+        .car-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0%; 
+            font-size: 35px; 
+            line-height: 1;
+            transition: left 1s ease-in-out;
+            z-index: 10; 
+            transform: translateX(-50%); 
+            margin-left: 17.5px; 
+            margin-right: 17.5px;
+        }
+        
+        
+        .car-wrapper.finished {
+             transform: translateX(-100%);
+             margin-left: 0;
+        }
+
+
+        
+        .track {
+            width: 100%;
+            height: 12px; 
+            background-color: #e0e0e0; 
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+       
+        .fill {
+            height: 100%;
+            background-color: #555; 
+            width: 0%; 
+            transition: width 1s ease-in-out;
+            border-radius: 6px;
+        }
+        
+      
+        .date-text {
+            margin-top: 10px;
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+            font-size: 16px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="widget-container">
+        <div class="car-wrapper" id="car">🚗</div>
+        
+        <div class="track">
+            <div class="fill" id="fill"></div>
+        </div>
+        
+        <div class="date-text">
+            Day <span id="current">0</span> / <span id="total">365</span>
+        </div>
+    </div>
+
+    <script>
+        function updateDrive() {
+           
+            const now = new Date();
+            const kst = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Seoul"}));
+            const year = kst.getFullYear();
+            const start = new Date(year, 0, 1);
+            const diff = kst - start;
+            const currentDay = Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
+            
+            const isLeap = new Date(year, 1, 29).getDate() === 29;
+            const totalDays = isLeap ? 366 : 365;
+            
+            
+            let percent = (currentDay / totalDays) * 100;
+            
+            percent = Math.min(percent, 100);
+
+         
+            const car = document.getElementById('car');
+            const fill = document.getElementById('fill');
+            
+           
+            fill.style.width = percent + "%";
+            car.style.left = percent + "%";
+            document.getElementById('current').textContent = currentDay;
+            document.getElementById('total').textContent = totalDays;
+
+           
+            if (percent >= 100) {
+                car.classList.add('finished');
+            } else {
+                car.classList.remove('finished');
+            }
+        }
+
+      
+        updateDrive();
+        // setInterval(updateDrive, 60000); 
+    </script>
+</body>
+</html>
