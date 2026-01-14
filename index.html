@@ -19,7 +19,7 @@
         .widget-container {
             width: 160px;
             position: relative;
-            padding-top: 80px;
+            padding-top: 65px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -39,14 +39,14 @@
         #planets {
             height: 18px;
             font-size: 16px;
-            margin-bottom: 15px;
+            margin-bottom: 2px;
             white-space: nowrap;
         }
         #rocket-emoji {
             display: inline-block;
             font-size: 24px;
             line-height: 1;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             transform: rotate(0deg);
         }
         .track {
@@ -65,28 +65,28 @@
             box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
         }
         .progress-text {
-            margin-top: 10px;
+            margin-top: 8px;
             color: rgba(255,255,255,0.7);
             font-size: 11px;
             font-weight: bold;
         }
         .clock-container {
-            margin-top: 20px;
+            margin-top: 15px;
             text-align: center;
             color: #fff;
             text-shadow: 0 0 5px rgba(255,255,255,0.5);
             border-top: 1px solid rgba(255,255,255,0.2);
-            padding-top: 15px;
+            padding-top: 10px;
             width: 100%;
         }
         #time {
-            font-size: 20px;
+            font-size: 19px;
             font-weight: bold;
             letter-spacing: 1px;
         }
         #date {
-            font-size: 11px;
-            margin-top: 5px;
+            font-size: 10px;
+            margin-top: 4px;
             color: rgba(255,255,255,0.8);
         }
     </style>
@@ -113,34 +113,28 @@
             function update() {
                 var now = new Date();
                 var kst = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Seoul"}));
-                
                 var year = kst.getFullYear();
                 var start = new Date(year, 0, 1);
                 var day = Math.floor((kst - start) / 86400000) + 1;
                 var total = new Date(year, 1, 29).getDate() === 29 ? 366 : 365;
                 var p = Math.min((day / total) * 100, 100);
-
                 var r = document.getElementById('rocket');
                 var f = document.getElementById('fill');
                 var pl = document.getElementById('planets');
-                
                 f.style.width = p + "%";
                 r.style.left = p + "%";
                 document.getElementById('current').innerHTML = day;
                 document.getElementById('total').innerHTML = total;
-
                 var icon = "";
                 if (p >= 100) icon = "☀️";
                 else if (p >= 75) icon = "🪐";
                 else if (p >= 50) icon = "🌕";
                 else if (p >= 25) icon = "🌟";
                 pl.innerHTML = icon;
-
                 var hh = String(kst.getHours()).padStart(2, '0');
                 var mm = String(kst.getMinutes()).padStart(2, '0');
                 var ss = String(kst.getSeconds()).padStart(2, '0');
                 document.getElementById('time').innerHTML = hh + ":" + mm + ":" + ss;
-
                 var yy = kst.getFullYear();
                 var mon = String(kst.getMonth() + 1).padStart(2, '0');
                 var dd = String(kst.getDate()).padStart(2, '0');
