@@ -17,14 +17,20 @@
             font-family: -apple-system, system-ui, sans-serif;
         }
         .widget-container {
-            width: 150px;
+            width: 180px;
             position: relative;
-            /* 상하 간격 확대로 인해 상단 여백을 80px로 충분히 확보 */
-            padding-top: 80px; 
+        }
+        .space-background {
+            position: relative;
+            width: 100%;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,1) 15%, rgba(0,0,0,0.7) 45%, rgba(0,0,0,0) 80%);
+            padding: 35px 20px 25px 20px;
+            border-radius: 50%;
+            box-sizing: border-box;
         }
         .rocket-wrapper {
             position: absolute;
-            top: 0;
+            top: 32px; 
             left: 0%;
             transition: left 1s ease-in-out;
             z-index: 10;
@@ -32,38 +38,38 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
         }
         #planets {
             height: 18px;
             font-size: 16px;
-            /* 행성과 로켓 사이 간격 (15px) */
-            margin-bottom: 15px; 
+            margin-bottom: 2px;
             white-space: nowrap;
         }
         #rocket-emoji {
             display: inline-block;
             font-size: 24px;
             line-height: 1;
-            /* 로켓과 바 사이 간격 (행성 간격과 동일하게 15px) */
-            margin-bottom: 15px; 
+            margin-bottom: 5px;
             transform: rotate(0deg);
         }
         .track {
             width: 100%;
             height: 6px;
-            background-color: #eee;
+            background-color: rgba(255,255,255,0.2);
             border-radius: 3px;
             overflow: hidden;
             position: relative;
         }
         .fill {
             height: 100%;
-            background: linear-gradient(90deg, #2c3e50, #000);
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
             width: 0%;
             transition: width 1s ease-in-out;
+            box-shadow: 0 0 8px rgba(0, 242, 254, 0.6);
         }
         .date-text {
-            margin-top: 10px;
+            margin-top: 8px;
             text-align: center;
             font-weight: bold;
             color: #333;
@@ -73,12 +79,14 @@
 </head>
 <body>
     <div class="widget-container">
-        <div class="rocket-wrapper" id="rocket">
-            <div id="planets"></div>
-            <span id="rocket-emoji">🚀</span>
-        </div>
-        <div class="track">
-            <div id="fill" class="fill"></div>
+        <div class="space-background">
+            <div class="rocket-wrapper" id="rocket">
+                <div id="planets"></div>
+                <span id="rocket-emoji">🚀</span>
+            </div>
+            <div class="track">
+                <div id="fill" class="fill"></div>
+            </div>
         </div>
         <div class="date-text">
             <span id="current">0</span> / <span id="total">365</span>
