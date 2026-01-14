@@ -19,7 +19,8 @@
         .widget-container {
             width: 150px;
             position: relative;
-            padding-top: 55px;
+            /* 상하 간격 확대로 인해 상단 여백을 80px로 충분히 확보 */
+            padding-top: 80px; 
         }
         .rocket-wrapper {
             position: absolute;
@@ -35,14 +36,16 @@
         #planets {
             height: 18px;
             font-size: 16px;
-            margin-bottom: 2px;
+            /* 행성과 로켓 사이 간격 (15px) */
+            margin-bottom: 15px; 
             white-space: nowrap;
         }
         #rocket-emoji {
             display: inline-block;
             font-size: 24px;
             line-height: 1;
-            margin-bottom: 10px;
+            /* 로켓과 바 사이 간격 (행성 간격과 동일하게 15px) */
+            margin-bottom: 15px; 
             transform: rotate(0deg);
         }
         .track {
@@ -60,7 +63,7 @@
             transition: width 1s ease-in-out;
         }
         .date-text {
-            margin-top: 8px;
+            margin-top: 10px;
             text-align: center;
             font-weight: bold;
             color: #333;
@@ -91,22 +94,18 @@
                 var d = Math.floor((k - s) / 86400000) + 1;
                 var t = new Date(y, 1, 29).getDate() === 29 ? 366 : 365;
                 var p = Math.min((d / t) * 100, 100);
-
                 var r = document.getElementById('rocket');
                 var f = document.getElementById('fill');
                 var pl = document.getElementById('planets');
-                
                 f.style.width = p + "%";
                 r.style.left = p + "%";
                 document.getElementById('current').innerHTML = d;
                 document.getElementById('total').innerHTML = t;
-
                 var icon = "";
                 if (p >= 100) icon = "☀️";
                 else if (p >= 75) icon = "🪐";
                 else if (p >= 50) icon = "🌕";
                 else if (p >= 25) icon = "🌟";
-                
                 pl.innerHTML = icon;
             }
             update();
