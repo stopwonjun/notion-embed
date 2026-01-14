@@ -17,9 +17,9 @@
             font-family: -apple-system, system-ui, sans-serif;
         }
         .widget-container {
-            width: 300px;
+            width: 200px;
             position: relative;
-            padding-top: 60px;
+            padding-top: 45px;
         }
         .rocket-wrapper {
             position: absolute;
@@ -33,40 +33,37 @@
             align-items: center;
         }
         #planets {
-            height: 25px;
-            font-size: 18px;
+            height: 20px;
+            font-size: 14px;
             margin-bottom: 2px;
             white-space: nowrap;
         }
         #rocket-emoji {
             display: inline-block;
-            font-size: 35px;
+            font-size: 28px;
             line-height: 1;
-            margin-bottom: 0; /* 간격 제거 */
             transform: rotate(0deg);
         }
         .track {
             width: 100%;
-            height: 10px;
+            height: 8px;
             background-color: #eee;
-            border-radius: 5px;
+            border-radius: 4px;
             overflow: hidden;
             position: relative;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
         }
         .fill {
             height: 100%;
             background: linear-gradient(90deg, #2c3e50, #000);
             width: 0%;
             transition: width 1s ease-in-out;
-            border-radius: 5px;
         }
         .date-text {
-            margin-top: 15px;
+            margin-top: 8px;
             text-align: center;
             font-weight: bold;
             color: #333;
-            font-size: 18px;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -77,7 +74,7 @@
             <span id="rocket-emoji">🚀</span>
         </div>
         <div class="track">
-            <div class="fill" id="fill"></div>
+            <div id="fill" class="fill"></div>
         </div>
         <div class="date-text">
             <span id="current">0</span> / <span id="total">365</span>
