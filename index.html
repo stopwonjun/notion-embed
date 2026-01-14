@@ -19,7 +19,7 @@
         .widget-container {
             width: 150px;
             position: relative;
-            padding-top: 40px;
+            padding-top: 55px;
         }
         .rocket-wrapper {
             position: absolute;
@@ -34,7 +34,7 @@
         }
         #planets {
             height: 18px;
-            font-size: 12px;
+            font-size: 16px;
             margin-bottom: 2px;
             white-space: nowrap;
         }
@@ -42,6 +42,7 @@
             display: inline-block;
             font-size: 24px;
             line-height: 1;
+            margin-bottom: 10px;
             transform: rotate(0deg);
         }
         .track {
@@ -59,7 +60,7 @@
             transition: width 1s ease-in-out;
         }
         .date-text {
-            margin-top: 6px;
+            margin-top: 8px;
             text-align: center;
             font-weight: bold;
             color: #333;
@@ -90,19 +91,23 @@
                 var d = Math.floor((k - s) / 86400000) + 1;
                 var t = new Date(y, 1, 29).getDate() === 29 ? 366 : 365;
                 var p = Math.min((d / t) * 100, 100);
+
                 var r = document.getElementById('rocket');
                 var f = document.getElementById('fill');
                 var pl = document.getElementById('planets');
+                
                 f.style.width = p + "%";
                 r.style.left = p + "%";
                 document.getElementById('current').innerHTML = d;
                 document.getElementById('total').innerHTML = t;
-                var icons = "";
-                if (p >= 25) icons += "🌟";
-                if (p >= 50) icons += "🌕";
-                if (p >= 75) icons += "🪐";
-                if (p >= 100) icons += "☀️";
-                pl.innerHTML = icons;
+
+                var icon = "";
+                if (p >= 100) icon = "☀️";
+                else if (p >= 75) icon = "🪐";
+                else if (p >= 50) icon = "🌕";
+                else if (p >= 25) icon = "🌟";
+                
+                pl.innerHTML = icon;
             }
             update();
         })();
