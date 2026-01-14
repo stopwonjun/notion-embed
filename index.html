@@ -13,28 +13,18 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: transparent;
+            /* 전체 배경 검은색 */
+            background-color: #000;
             font-family: -apple-system, system-ui, sans-serif;
         }
         .widget-container {
-            width: 180px;
+            width: 150px;
             position: relative;
-        }
-        .space-background {
-            position: relative;
-            width: 100%;
-            /* 타원형 그라데이션 유지 */
-            background: radial-gradient(ellipse at center, rgba(0,0,0,1) 20%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0) 85%);
-            /* 내부 콘텐츠 위치 조정을 위한 패딩 */
-            padding: 45px 20px 30px 20px;
-            /* 핵심: 위는 둥글고 아래는 둥근 사각형 모양 만들기 */
-            /* 왼쪽 위, 오른쪽 위, 오른쪽 아래, 왼쪽 아래 순서 */
-            border-radius: 100px 100px 20px 20px;
-            box-sizing: border-box;
+            padding-top: 80px;
         }
         .rocket-wrapper {
             position: absolute;
-            top: 40px; /* 배경 모양 변화에 맞춰 위치 미세 조정 */
+            top: 0;
             left: 0%;
             transition: left 1s ease-in-out;
             z-index: 10;
@@ -42,24 +32,26 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
+            /* 검은 배경에서 이모지가 잘 보이도록 약간의 흰색 그림자 추가 */
+            filter: drop-shadow(0 0 2px rgba(255,255,255,0.5));
         }
         #planets {
             height: 18px;
             font-size: 16px;
-            margin-bottom: 2px;
+            margin-bottom: 15px;
             white-space: nowrap;
         }
         #rocket-emoji {
             display: inline-block;
             font-size: 24px;
             line-height: 1;
-            margin-bottom: 5px;
+            margin-bottom: 15px;
             transform: rotate(0deg);
         }
         .track {
             width: 100%;
             height: 6px;
+            /* 트랙 배경을 반투명한 흰색으로 변경 */
             background-color: rgba(255,255,255,0.2);
             border-radius: 3px;
             overflow: hidden;
@@ -67,30 +59,31 @@
         }
         .fill {
             height: 100%;
-            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            /* 프로그레스 바 채움색을 흰색으로 변경 */
+            background: #fff;
             width: 0%;
             transition: width 1s ease-in-out;
-            box-shadow: 0 0 8px rgba(0, 242, 254, 0.6);
+            /* 흰색 빛나는 효과 추가 */
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
         }
         .date-text {
-            margin-top: 8px;
+            margin-top: 10px;
             text-align: center;
             font-weight: bold;
-            color: #333;
+            /* 날짜 텍스트 색상을 흰색으로 변경 */
+            color: #fff;
             font-size: 12px;
         }
     </style>
 </head>
 <body>
     <div class="widget-container">
-        <div class="space-background">
-            <div class="rocket-wrapper" id="rocket">
-                <div id="planets"></div>
-                <span id="rocket-emoji">🚀</span>
-            </div>
-            <div class="track">
-                <div id="fill" class="fill"></div>
-            </div>
+        <div class="rocket-wrapper" id="rocket">
+            <div id="planets"></div>
+            <span id="rocket-emoji">🚀</span>
+        </div>
+        <div class="track">
+            <div id="fill" class="fill"></div>
         </div>
         <div class="date-text">
             <span id="current">0</span> / <span id="total">365</span>
