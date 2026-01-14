@@ -19,7 +19,7 @@
         .widget-container {
             width: 300px;
             position: relative;
-            padding-top: 80px;
+            padding-top: 60px;
         }
         .rocket-wrapper {
             position: absolute;
@@ -42,7 +42,7 @@
             display: inline-block;
             font-size: 35px;
             line-height: 1;
-            margin-bottom: 15px;
+            margin-bottom: 0; /* 간격 제거 */
             transform: rotate(0deg);
         }
         .track {
@@ -93,16 +93,13 @@
                 var d = Math.floor((k - s) / 86400000) + 1;
                 var t = new Date(y, 1, 29).getDate() === 29 ? 366 : 365;
                 var p = Math.min((d / t) * 100, 100);
-
                 var r = document.getElementById('rocket');
                 var f = document.getElementById('fill');
                 var pl = document.getElementById('planets');
-                
                 f.style.width = p + "%";
                 r.style.left = p + "%";
                 document.getElementById('current').innerHTML = d;
                 document.getElementById('total').innerHTML = t;
-
                 var icons = "";
                 if (p >= 25) icons += "🌟";
                 if (p >= 50) icons += "🌕";
