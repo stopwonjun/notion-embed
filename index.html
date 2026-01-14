@@ -19,26 +19,31 @@
         .widget-container {
             width: 300px;
             position: relative;
-            padding-top: 35px;
+            padding-top: 60px;
         }
-        .car-wrapper {
+        .rocket-wrapper {
             position: absolute;
             top: 0;
             left: 0%;
             transition: left 1s ease-in-out;
             z-index: 10;
             transform: translateX(-50%);
-            margin-left: 17.5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        #car-emoji {
+        #planets {
+            height: 25px;
+            font-size: 20px;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            letter-spacing: 2px;
+        }
+        #rocket-emoji {
             display: inline-block;
             font-size: 35px;
             line-height: 1;
-            transform: rotateY(180deg);
-        }
-        .car-wrapper.finished {
-            transform: translateX(-100%);
-            margin-left: 0;
+            transform: rotate(90deg);
         }
         .track {
             width: 100%;
@@ -51,24 +56,26 @@
         }
         .fill {
             height: 100%;
-            background-color: #333;
+            background: linear-gradient(90deg, #2c3e50, #000);
             width: 0%;
             transition: width 1s ease-in-out;
             border-radius: 5px;
         }
         .date-text {
-            margin-top: 12px;
+            margin-top: 15px;
             text-align: center;
             font-weight: bold;
             color: #333;
             font-size: 18px;
+            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
     <div class="widget-container">
-        <div class="car-wrapper" id="car">
-            <span id="car-emoji">🚗</span>
+        <div class="rocket-wrapper" id="rocket">
+            <div id="planets"></div>
+            <span id="rocket-emoji">🚀</span>
         </div>
         <div class="track">
             <div class="fill" id="fill"></div>
@@ -80,25 +87,29 @@
     <script>
         (function() {
             function update() {
-                var now = new Date();
-                var kst = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Seoul"}));
-                var year = kst.getFullYear();
-                var start = new Date(year, 0, 1);
-                var diff = kst - start;
-                var day = Math.floor(diff / 86400000) + 1;
-                var total = new Date(year, 1, 29).getDate() === 29 ? 366 : 365;
-                var percent = Math.min((day / total) * 100, 100);
+                var n = new Date();
+                var k = new Date(n.toLocaleString("en-US", {timeZone: "Asia/Seoul"}));
+                var y = k.getFullYear();
+                var s = new Date(y, 0, 1);
+                var d = Math.floor((k - s) / 86400000) + 1;
+                var t = new Date(y, 1, 29).getDate() === 29 ? 366 : 365;
+                var p = Math.min((d / t) * 100, 100);
 
-                var car = document.getElementById('car');
-                var fill = document.getElementById('fill');
+                var r = document.getElementById('rocket');
+                var f = document.getElementById('fill');
+                var pl = document.getElementById('planets');
                 
-                fill.style.width = percent + "%";
-                car.style.left = percent + "%";
-                document.getElementById('current').innerHTML = day;
-                document.getElementById('total').innerHTML = total;
+                f.style.width = p + "%";
+                r.style.left = p + "%";
+                document.getElementById('current').innerHTML = d;
+                document.getElementById('total').innerHTML = t;
 
-                if (percent >= 100) car.classList.add('finished');
-                else car.classList.remove('finished');
+                var icons = "";
+                if (p >= 25) icons += "🌟";
+                if (p >= 50) icons += "🌕";
+                if (p >= 75) icons += "🪐";
+                if (p >= 100) icons += "☀️";
+                pl.innerHTML = icons;
             }
             update();
         })();
