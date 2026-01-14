@@ -13,14 +13,16 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            /* 전체 배경 검은색 */
             background-color: #000;
-            font-family: -apple-system, system-ui, sans-serif;
+            font-family: 'Courier New', Courier, monospace;
         }
         .widget-container {
-            width: 150px;
+            width: 160px;
             position: relative;
             padding-top: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .rocket-wrapper {
             position: absolute;
@@ -32,8 +34,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* 검은 배경에서 이모지가 잘 보이도록 약간의 흰색 그림자 추가 */
-            filter: drop-shadow(0 0 2px rgba(255,255,255,0.5));
+            filter: drop-shadow(0 0 3px rgba(255,255,255,0.6));
         }
         #planets {
             height: 18px;
@@ -51,28 +52,42 @@
         .track {
             width: 100%;
             height: 6px;
-            /* 트랙 배경을 반투명한 흰색으로 변경 */
-            background-color: rgba(255,255,255,0.2);
+            background-color: rgba(255,255,255,0.15);
             border-radius: 3px;
             overflow: hidden;
             position: relative;
         }
         .fill {
             height: 100%;
-            /* 프로그레스 바 채움색을 흰색으로 변경 */
             background: #fff;
             width: 0%;
             transition: width 1s ease-in-out;
-            /* 흰색 빛나는 효과 추가 */
-            box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
         }
-        .date-text {
+        .progress-text {
             margin-top: 10px;
-            text-align: center;
+            color: rgba(255,255,255,0.7);
+            font-size: 11px;
             font-weight: bold;
-            /* 날짜 텍스트 색상을 흰색으로 변경 */
+        }
+        .clock-container {
+            margin-top: 20px;
+            text-align: center;
             color: #fff;
-            font-size: 12px;
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 15px;
+            width: 100%;
+        }
+        #time {
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        #date {
+            font-size: 11px;
+            margin-top: 5px;
+            color: rgba(255,255,255,0.8);
         }
     </style>
 </head>
@@ -85,34 +100,55 @@
         <div class="track">
             <div id="fill" class="fill"></div>
         </div>
-        <div class="date-text">
+        <div class="progress-text">
             <span id="current">0</span> / <span id="total">365</span>
+        </div>
+        <div class="clock-container">
+            <div id="time">00:00:00</div>
+            <div id="date">0000. 00. 00. (토)</div>
         </div>
     </div>
     <script>
         (function() {
             function update() {
-                var n = new Date();
-                var k = new Date(n.toLocaleString("en-US", {timeZone: "Asia/Seoul"}));
-                var y = k.getFullYear();
-                var s = new Date(y, 0, 1);
-                var d = Math.floor((k - s) / 86400000) + 1;
-                var t = new Date(y, 1, 29).getDate() === 29 ? 366 : 365;
-                var p = Math.min((d / t) * 100, 100);
+                var now = new Date();
+                var kst = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Seoul"}));
+                
+                var year = kst.getFullYear();
+                var start = new Date(year, 0, 1);
+                var day = Math.floor((kst - start) / 86400000) + 1;
+                var total = new Date(year, 1, 29).getDate() === 29 ? 366 : 365;
+                var p = Math.min((day / total) * 100, 100);
+
                 var r = document.getElementById('rocket');
                 var f = document.getElementById('fill');
                 var pl = document.getElementById('planets');
+                
                 f.style.width = p + "%";
                 r.style.left = p + "%";
-                document.getElementById('current').innerHTML = d;
-                document.getElementById('total').innerHTML = t;
+                document.getElementById('current').innerHTML = day;
+                document.getElementById('total').innerHTML = total;
+
                 var icon = "";
                 if (p >= 100) icon = "☀️";
                 else if (p >= 75) icon = "🪐";
                 else if (p >= 50) icon = "🌕";
                 else if (p >= 25) icon = "🌟";
                 pl.innerHTML = icon;
+
+                var hh = String(kst.getHours()).padStart(2, '0');
+                var mm = String(kst.getMinutes()).padStart(2, '0');
+                var ss = String(kst.getSeconds()).padStart(2, '0');
+                document.getElementById('time').innerHTML = hh + ":" + mm + ":" + ss;
+
+                var yy = kst.getFullYear();
+                var mon = String(kst.getMonth() + 1).padStart(2, '0');
+                var dd = String(kst.getDate()).padStart(2, '0');
+                var week = ['일', '월', '화', '수', '목', '금', '토'];
+                var dayName = week[kst.getDay()];
+                document.getElementById('date').innerHTML = yy + ". " + mon + ". " + dd + ". (" + dayName + ")";
             }
+            setInterval(update, 1000);
             update();
         })();
     </script>
