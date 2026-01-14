@@ -25,15 +25,19 @@
             position: absolute;
             top: 0;
             left: 0%;
-            font-size: 35px;
-            line-height: 1;
             transition: left 1s ease-in-out;
             z-index: 10;
-            transform: translateX(-50%) scaleX(-1);
+            transform: translateX(-50%);
             margin-left: 17.5px;
         }
+        #car-emoji {
+            display: inline-block;
+            font-size: 35px;
+            line-height: 1;
+            transform: rotateY(180deg);
+        }
         .car-wrapper.finished {
-            transform: translateX(-100%) scaleX(-1);
+            transform: translateX(-100%);
             margin-left: 0;
         }
         .track {
@@ -63,7 +67,9 @@
 </head>
 <body>
     <div class="widget-container">
-        <div class="car-wrapper" id="car">🚗</div>
+        <div class="car-wrapper" id="car">
+            <span id="car-emoji">🚗</span>
+        </div>
         <div class="track">
             <div class="fill" id="fill"></div>
         </div>
